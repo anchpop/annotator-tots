@@ -37,9 +37,9 @@ To start working in React, we don't need any of this, but we can leave it here. 
 
 Now lets put some content inside `src` real quickly. Make a new file, `src/index.jsx`. We need to put a basic react app in here. If you don't know what to put, here's something that'll just render "Hello world!".
 
-import { render } from 'react-dom';
+    import { render } from 'react-dom';
 
-render(<h1>Hello world! {window.props.a[0]} </h1>, document.getElementById('root'));
+    render(<h1>Hello world! {window.props.a[0]} </h1>, document.getElementById('root'));
 
 
 Now, we're going to use Mozilla's excellent [NeutrinoJS](https://neutrinojs.org/) to build our project. Run 
