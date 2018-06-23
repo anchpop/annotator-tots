@@ -2,6 +2,7 @@
   "name": "tator2",
   "version": "0.1.0",
   "dependencies": {
+    "@material-ui/core": "^1.2.3",
     "@neutrinojs/airbnb-base": "^8.2.3",
     "@neutrinojs/eslint": "^8.2.3",
     "@neutrinojs/pwa": "^8.2.3",

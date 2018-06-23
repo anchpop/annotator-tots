@@ -64,53 +64,43 @@ with
 Lastly, create a `webpacktest/.neutrinorc.js`. This will be our configuration file for Neutrino. The contents of this file should look something like this:
 
     module.exports = {
-    options: {
-        root: 'webpacktest',
-        source: 'src',
-        output: 'static',
-    },
-    use: [
-        // '@neutrinojs/pwa', // Uncomment to enable PWA (this is mostly used in production)
-        '@neutrinojs/airbnb-base',
-        '@neutrinojs/react',
-        {
-        html: {
-            title: 'react-files'
-        }
+        options: {
+            root: 'labelsquad',
+            source: 'src',
+            output: 'static',
         },
-        (neutrino) => {
-        if (neutrino.options.command === 'start') {
-            neutrino.config.devServer.clear();
-        }
-        },
-    'neutrino-middleware-browser-sync', {
-        browserSyncOptions: {
-            port: 6000
-        },
-        pluginOptions: {
-            reload: false
-        }
-        } /**/
+        use: [
+            // '@neutrinojs/pwa', // Uncomment to enable PWA (this is mostly used in production)
+            ['@neutrinojs/airbnb-base', {
+                eslint: {
+                    "rules": {
+                        "no-unused-vars": "off"
+                    }
+                }
+            }],
+            '@neutrinojs/react',
+            {
+                html: {
+                    title: 'react-files'
+                }
+            },
+            (neutrino) => {
+                if (neutrino.options.command === 'start') {
+                    neutrino.config.devServer.clear();
+                }
+            },
+            'neutrino-middleware-browser-sync', {
+                browserSyncOptions: {
+                    port: 6000
+                },
+                pluginOptions: {
+                    reload: false
+                }
+            }
 
-    ]/*
-    use: [
-        '@neutrinojs/airbnb',
-        [
-        '@neutrinojs/react',
-        {
-            html: {
-            title: 'react-files'
-            }
-        },
-        (neutrino) => {
-            if (neutrino.options.command === 'start') {
-            neutrino.config.devServer.clear();
-            }
-        }
-        ],
-        '@neutrinojs/jest' @neutrinojs/react 
-    ]*/
+        ]
     };
+
 
 
 If you wanted to use a different django app, not the default one, you would replace `webpacktest` in `root: 'webpacktest'` with the name of your app.

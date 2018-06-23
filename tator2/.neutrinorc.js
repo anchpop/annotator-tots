@@ -6,43 +6,32 @@ module.exports = {
     },
     use: [
         // '@neutrinojs/pwa', // Uncomment to enable PWA (this is mostly used in production)
-        '@neutrinojs/airbnb-base',
-        '@neutrinojs/react',
-        {
-        html: {
-            title: 'react-files'
-        }
-        },
-        (neutrino) => {
-        if (neutrino.options.command === 'start') {
-            neutrino.config.devServer.clear();
-        }
-        },
-    'neutrino-middleware-browser-sync', {
-        browserSyncOptions: {
-            port: 6000
-        },
-        pluginOptions: {
-            reload: false
-        }
-        } /**/
-
-    ]/*
-    use: [
-        '@neutrinojs/airbnb',
-        [
+        ['@neutrinojs/airbnb-base', {
+            eslint: {
+                "rules": {
+                    "no-unused-vars": "off"
+                }
+            }
+        }],
         '@neutrinojs/react',
         {
             html: {
-            title: 'react-files'
+                title: 'react-files'
             }
         },
         (neutrino) => {
             if (neutrino.options.command === 'start') {
-            neutrino.config.devServer.clear();
+                neutrino.config.devServer.clear();
+            }
+        },
+        'neutrino-middleware-browser-sync', {
+            browserSyncOptions: {
+                port: 6000
+            },
+            pluginOptions: {
+                reload: false
             }
         }
-        ],
-        '@neutrinojs/jest' @neutrinojs/react 
-    ]*/
-    };
+
+    ]
+};
