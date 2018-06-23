@@ -113,6 +113,8 @@ Lastly, create a `webpacktest/.neutrinorc.js`. This will be our configuration fi
     };
 
 
+If you wanted to use a different django app, not the default one, you would replace `webpacktest` in `root: 'webpacktest'` with the name of your app.
+
 Now if you open two command prompts at `webpacktest`, you should be able to run `yarn start` in one and `python manage.py runserver` in another. You'll notice that any changes you make to `webpacktest/webpacktest/src/index.jsx` are copied into `webpacktest/webpacktest/static/index.js` (after compiling it to javascript from jsx). So now we have that, the last part of the job is to actually view it in django. Make a new template at `webpacktest/webpacktest/templates/homepage.html` and put this inside:
 
     {% load static %}<!DOCTYPE html>
@@ -139,84 +141,31 @@ Now if you open two command prompts at `webpacktest`, you should be able to run 
     </body>
     </html>
 
-Now, make a new view 
+Now, make a new view in `webpacktest/webpacktest/users/views.py` that looks something like this:
 
-==========
-Now, go into whatever director your `webpacktest` is in (in my case, `Documents/dev`) and run
+    import json
 
-    npx create-react-app my-app
-    cd my-app
-    yarn eject
-
-This should give us a new folder called `my-app` which will have everything we need to start using React, we just need to put it in `webpacktest`. Make a folder in `webpacktest` named `react-config`. Now you should see some files in `my-app/config`, copy them (not the `jest` folder) into `webpacktest/react-config`. Next step is to copy the `my-app/scripts` into `webpacktest`. Lets rename it to `react-scripts` though, to avoid confusion. 
-
-Now lets go into our `webpacktest/package.json` and edit it to work with our react scripts. Replace
-
-  "scripts": {
-    "dev": "gulp"
-  }
-
-with
-
-  "scripts": {
-    "start": "node react-scripts/start.js",
-    "build": "node react-scripts/build.js"
-  }
-
-It's time to bring in the source for our react app we can use as a template. Copy `my-app/src` into `webpacktest/webpacktest/static`. Your directory tree should now look like this:
-
-    webpacktest
-    ├───config
-    │   └───settings
-    ├───react-config
-    ├───docs
-    ├───locale
-    ├───react-scripts
-    ├───requirements
-    ├───utility
-    └───webpacktest
-        ├───contrib
-        │   └───sites
-        │       └───migrations
-        ├───static
-        │   ├───dist
-        │   │   └───js
-        │   └───src
-        │       ├───fonts
-        │       ├───images
-        │       │   └───favicons
-        │       ├───js
-        │       └───sass
-        ├───templates
-        │   ├───account
-        │   ├───pages
-        │   └───users
-        └───users
-            ├───migrations
-            └───tests
-        
+    [...]
 
 
+    def index(request):
+
+        props = {"a": ["1", "@", "3"]}
+
+        context = {'image_collection_list': image_collection_list,
+                'project_list': project_list,
+                "props": json.dumps(props)}
+
+        return render(request, 'homepage.html', context)
+
+Now, go to your `webpacktest/webpacktest/users/urls.py` and change 
 
 
-
-
-
-
-
-
-
-
-
-======================
-Now lets change line 27 in `package.json` from 
-
-    "dev": "gulp"
+    path("", view=views.UserListView.as_view(), name="list"),
 
 to 
 
-    "dev": "webpack"
+    path("", view=views.index, name="index"),
 
-If you did it right, when you run `npm run dev` you should see a bunch of errors. We need a webpack config file. Create a new file in `webpacktest/` (not `webpacktest/webpacktest`), named `webpack.config.js`.
 
-Inside that file we want to define our rules. Lets start up with some basic setup.
+Now when you go to `localhost:8000` you should see a page with your shiny new react app, saying "Hello world! @`
