@@ -336,3 +336,6 @@ pip-selfcheck.json
 tator2/media/
 
 .pytest_cache/
+
+
+*/static

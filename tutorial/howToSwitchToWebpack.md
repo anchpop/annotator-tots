@@ -37,13 +37,14 @@ To start working in React, we don't need any of this, but we can leave it here. 
 
 Now lets put some content inside `src` real quickly. Make a new file, `src/index.jsx`. We need to put a basic react app in here. If you don't know what to put, here's something that'll just render "Hello world!".
 
-    import { render } from 'react-dom';
+import { render } from 'react-dom';
 
-    render(<h1>Hello world!</h1>, document.getElementById('root'));
+render(<h1>Hello world! {window.props.a[0]} </h1>, document.getElementById('root'));
+
 
 Now, we're going to use Mozilla's excellent [NeutrinoJS](https://neutrinojs.org/) to build our project. Run 
 
-    yarn add @neutrinojs/react @neutrinojs/airbnb-base @neutrinojs/pwa neutrino-middleware-browser-sync neutrino-preset-flowreact react-dom @neutrinojs/eslint webpack@3.0.0 --save
+    yarn add @neutrinojs/react @neutrinojs/airbnb-base @neutrinojs/pwa neutrino-middleware-browser-sync neutrino-preset-flow react react-dom @neutrinojs/eslint webpack@3.0.0 --save
     yarn add browser-sync neutrino webpack-cli webpack-dev-server --dev
 
 
@@ -111,6 +112,34 @@ Lastly, create a `webpacktest/.neutrinorc.js`. This will be our configuration fi
     ]*/
     };
 
+
+Now if you open two command prompts at `webpacktest`, you should be able to run `yarn start` in one and `python manage.py runserver` in another. You'll notice that any changes you make to `webpacktest/webpacktest/src/index.jsx` are copied into `webpacktest/webpacktest/static/index.js` (after compiling it to javascript from jsx). So now we have that, the last part of the job is to actually view it in django. Make a new template at `webpacktest/webpacktest/templates/homepage.html` and put this inside:
+
+    {% load static %}<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>Webpack App</title>
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    </head>
+    <body>
+    <div id="root">
+    </div>
+    <script>
+    window.props = {{ test }};  // make sure to escape your props to prevent XSS! See here for the source for the json filter: https://gist.github.com/pirate/c18bfe4fd96008ffa0aef25001a2e88f
+    window.react_mount = document.getElementById('react');
+    </script>
+    <script src="{% static '/index.js' %}" type="text/javascript"></script>
+    {% if debug %}
+    <script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.4'><\/script>".replace("HOST", location.hostname));
+    //]]></script>
+    {% endif %}
+    </body>
+    </html>
+
+Now, make a new view 
 
 ==========
 Now, go into whatever director your `webpacktest` is in (in my case, `Documents/dev`) and run
