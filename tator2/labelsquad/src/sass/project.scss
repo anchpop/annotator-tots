@@ -1,8 +1,9 @@
-
-
-
-
 // project specific CSS goes here
+
+body {
+  background-color: red;
+}
+ 
 
 ////////////////////////////////
 		//Variables//
@@ -29,7 +30,7 @@ $red: #b94a48;
   border-color: $mint-green;
   color: $black;
 }
-
+ 
 .alert-error {
   background-color: $pink;
   border-color: $dark-pink;

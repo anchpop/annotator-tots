@@ -44,7 +44,7 @@ Now lets put some content inside `src` real quickly. Make a new file, `src/index
 
 Now, we're going to use Mozilla's excellent [NeutrinoJS](https://neutrinojs.org/) to build our project. Run 
 
-    yarn add @neutrinojs/react @neutrinojs/airbnb-base @neutrinojs/pwa neutrino-middleware-browser-sync neutrino-preset-flow react react-dom @neutrinojs/eslint webpack@3.0.0 --save
+    yarn add @neutrinojs/react @neutrinojs/airbnb-base @neutrinojs/pwa neutrino-middleware-browser-sync neutrino-preset-flow react react-dom @neutrinojs/eslint webpack@3.0.0 emotion react-emotion
     yarn add browser-sync neutrino webpack-cli webpack-dev-server --dev
 
 
@@ -74,7 +74,13 @@ Lastly, create a `webpacktest/.neutrinorc.js`. This will be our configuration fi
             ['@neutrinojs/airbnb-base', {
                 eslint: {
                     "rules": {
-                        "no-unused-vars": "off"
+                        "no-unused-vars": "off",
+                        "linebreak-style": "off",
+                        "eol-last": "off",
+                        "indent": "off",
+                        "import/no-unresolved": "off",
+                        "import/extensions": "off",
+                        "import/prefer-default-export": "off"
                     }
                 }
             }],
@@ -97,9 +103,10 @@ Lastly, create a `webpacktest/.neutrinorc.js`. This will be our configuration fi
                     reload: false
                 }
             }
-
         ]
     };
+
+
 
 
 

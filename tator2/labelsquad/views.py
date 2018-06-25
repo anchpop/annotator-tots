@@ -9,7 +9,8 @@ def index(request):
     project_list = Project.objects.order_by(
         '-creation_date')
 
-    props = {"a": ["1", "@", "3"]}
+    props = {"collections": [{"owner": collec.created_by.username,
+                              "name": collec.name, "description": collec.description, "id": collec.id, "numImages": len(collec.image_set.all())} for collec in image_collection_list]}
 
     context = {'image_collection_list': image_collection_list,
                'project_list': project_list,
