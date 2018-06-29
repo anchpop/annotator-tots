@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 
 
 import CollectionCard from './collectionCard';
+import ProjectCard from './projectCard';
 
 
 const styles = theme => ({
@@ -31,6 +32,7 @@ const styles = theme => ({
 function App(props) {
     const cards = [];
     const { classes } = props;
+
     for (let i = 0; i < props.collections.length; i += 1) {
         const collec = props.collections[i];
         cards.push(<CollectionCard
@@ -40,6 +42,16 @@ function App(props) {
             numOfImages={collec.numImages}
             description={collec.description} />);
     }
+    for (let i = 0; i < props.projects.length; i += 1) {
+        const project = props.projects[i];
+        cards.push(<ProjectCard
+            key={project.id}
+            owner={project.owner}
+            collectionName={project.name}
+            numOfImages={project.numImages}
+            description={project.description} />);
+    }
+
 
     return (
         <div>
