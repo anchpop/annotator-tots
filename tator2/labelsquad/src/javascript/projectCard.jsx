@@ -53,13 +53,13 @@ function SimpleCard(props) {
             <Card className={classes.card} >
                 <CardContent className={classes.cardContent}>
                     <Typography className={classes.title} color="textSecondary">
-                        {props.owner}'s collection
+                        @{props.owner}'s project
                     </Typography>
                     <Typography className={classes.name} variant="headline" component="h2">
                         {props.collectionName}
                     </Typography>
                     <Typography className={classes.pos} color="textSecondary">
-                        {props.numOfImages} images
+                        {props.numOfImages} collections
                     </Typography>
                     <Typography component="p">
                         {props.description}

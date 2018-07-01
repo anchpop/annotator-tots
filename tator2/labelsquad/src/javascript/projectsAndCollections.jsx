@@ -9,11 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-
+import { connect } from 'react-redux';
 
 import CollectionCard from './collectionCard';
 import ProjectCard from './projectCard';
-
+import { collections } from './actions';
 
 const styles = theme => ({
     root: {
@@ -28,28 +28,33 @@ const styles = theme => ({
     },
 });
 
-
-function App(props) {
+function ProjectsAndCollections(props) {
     const cards = [];
     const { classes } = props;
-
-    for (let i = 0; i < props.collections.length; i += 1) {
-        const collec = props.collections[i];
-        cards.push(<CollectionCard
-            key={collec.id}
-            owner={collec.owner}
-            collectionName={collec.name}
-            numOfImages={collec.numImages}
-            description={collec.description} />);
+    console.log('props: ');
+    console.log(props);
+    if (props.collections !== undefined) {
+        for (let i = 0; i < props.collections.length; i += 1) {
+            const collec = props.collections[i];
+            cards.push(<CollectionCard
+                key={collec.id}
+                owner={collec.owner}
+                collectionName={collec.name}
+                numOfImages={collec.numImages}
+                description={collec.description} />);
+        }
     }
-    for (let i = 0; i < props.projects.length; i += 1) {
-        const project = props.projects[i];
-        cards.push(<ProjectCard
-            key={project.id}
-            owner={project.owner}
-            collectionName={project.name}
-            numOfImages={project.numImages}
-            description={project.description} />);
+
+    if (props.projects !== undefined) {
+        for (let i = 0; i < props.projects.length; i += 1) {
+            const project = props.projects[i];
+            cards.push(<ProjectCard
+                key={project.id}
+                owner={project.owner}
+                collectionName={project.name}
+                numOfImages={project.numImages}
+                description={project.description} />);
+        }
     }
 
 
@@ -59,7 +64,7 @@ function App(props) {
                 <AppBar position="static" color="default">
                     <Toolbar>
                         <Typography variant="title" color="inherit">
-                            Labelsquad
+                            Labelsquadz
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -74,14 +79,30 @@ function App(props) {
                         ))}
                     </Grid>
                 </Grid></Grid>
-            <Button variant="contained" color="primary">
-                Hello World
+            <Button variant="contained" color="primary" onClick={() => props.createCollection("yo")}>
+                Hello Worl
             </Button>
         </div>
     );
 }
 
-App.propTypes = {
+const mapStateToProps = state => ({
+      collections: state.collections,
+      projects: state.projects,
+    });
+
+const mapDispatchToProps = dispatch => ({
+    createCollection: (text) => {
+        dispatch(collections.createCollection(text));
+    },
+});
+
+
+ProjectsAndCollections.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(App);
+
+export default connect(
+mapStateToProps,
+    mapDispatchToProps,
+)(withStyles(styles)(ProjectsAndCollections));
