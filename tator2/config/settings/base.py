@@ -71,6 +71,7 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'react',
 ]
 LOCAL_APPS = [
     'tator2.users.apps.UsersAppConfig',
@@ -79,6 +80,13 @@ LOCAL_APPS = [
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+
+REACT = {
+    'RENDER': not DEBUG,
+    'RENDER_URL': 'http://127.0.0.1:9009/render',
+}
+
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------

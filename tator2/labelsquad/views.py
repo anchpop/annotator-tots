@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import json
 from .models import *
+from react.render import render_component
 
 
 def index(request):
@@ -21,8 +22,11 @@ def index(request):
                            "id": project.id,
                            "numImages": len(project.collections.all())} for project in project_list]}
 
-    context = {'image_collection_list': image_collection_list,
-               'project_list': project_list,
-               "props": json.dumps(props)}
+    context = {"props": json.dumps(props)}
+
+    # rendered = render_component(
+    #    'C:/Users/hyper/Documents/GitHub/annotator-tots/tator2/labelsquad/static/bundle.js', context)
+
+    # print(rendered)
 
     return render(request, 'labelsquad/reacttest.html', context)

@@ -80,7 +80,7 @@ function ProjectsAndCollections(props) {
                     </Grid>
                 </Grid></Grid>
             <Button variant="contained" color="primary" onClick={() => props.createCollection("yo")}>
-                Hello Worl
+                Hello World
             </Button>
         </div>
     );
