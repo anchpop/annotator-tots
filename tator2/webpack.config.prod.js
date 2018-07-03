@@ -53,7 +53,7 @@ module.exports = function(env, argv) {
   }
 
   return {
-    mode: env.production ? 'production' : 'development',
+    mode: 'production',
     //devtool: env.production ? 'source-maps' : 'eval',
 
     entry: paths.src + '/index.jsx',  
