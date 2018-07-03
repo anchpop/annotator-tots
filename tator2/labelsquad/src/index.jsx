@@ -9,7 +9,7 @@ import App from './javascript/app';
 import labelSquadApp from './javascript/reducers';
 
 console.log("jel")
-/*
+
 if (typeof(window) == "undefined")
 {
     global.window = new Object()
@@ -22,4 +22,4 @@ ReactDOM.render(<div>test</div>, document.getElementById('root'));
 
 ReactDOM.render(<Provider store={store}>
                     <App collections={window.props.collections} projects={window.props.projects} />
-                </Provider>, document.getElementById('root'));*/
+                </Provider>, document.getElementById('root'));
