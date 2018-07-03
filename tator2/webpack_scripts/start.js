@@ -25,10 +25,12 @@ process.on('unhandledRejection', err => {
 // Ensure environment variables are read.
 require('../webpack_config/env');
 
-const fs = require('fs');
+//const fs = require('fs');
+const fs = require('fs-extra');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
+var browersync = require("browser-sync")
 const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
@@ -89,9 +91,17 @@ choosePort(HOST, DEFAULT_PORT)
       proxyConfig,
       urls.lanUrlForConfig
     );
-    console.log("b")
-    const devServer = new WebpackDevServer(compiler, serverConfig);
-    console.log("b2")
+    copyPublicFolder()
+    const pack = new webpack(config, function(error, stats) {
+      if(!!server && !!server.active) {
+          server.reload()
+      }
+    });
+    let server = browersync({
+        server: paths.appBuild,
+        port: 3000
+    });
+    /*
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
       if (err) {
@@ -100,8 +110,9 @@ choosePort(HOST, DEFAULT_PORT)
       if (isInteractive) {
         clearConsole();
       }
-      console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
+      copyPublicFolder()
+      console.log(chalk.cyan('Starting the development server at \'' + urls.localUrlForBrowser + '\'...\n'));
+      //openBrowser(urls.localUrlForBrowser);
     });
 
     ['SIGINT', 'SIGTERM'].forEach(function(sig) {
@@ -109,11 +120,19 @@ choosePort(HOST, DEFAULT_PORT)
         devServer.close();
         process.exit();
       });
-    });
+    });*/
   })
-  .catch(err => {
+  /*.catch(err => {
     if (err && err.message) {
       console.log(err.message);
     }
     process.exit(1);
+  })*/;
+
+  
+function copyPublicFolder() {
+  fs.copySync(paths.appPublic, paths.appBuild, {
+    dereference: true,
+    filter: file => file !== paths.appHtml,
   });
+}

@@ -2,13 +2,14 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Chrome",
+        "name": "Labelsquad",
         "type": "chrome",
         "request": "launch",
-        "url": "http://localhost:8000",
+        "url": "http://localhost:8000/labelsquad",
         "webRoot": "${workspaceRoot}/tator2/labelsquad/src/",
         "sourceMapPathOverrides": {
-          "webpack:///src/*": "${webRoot}/*"
+          "webpack:///src/*": "${webRoot}/*",
+          "static/static/js/*": "${webRoot}/*"
       }
     }]
   }

@@ -112,7 +112,7 @@
     "build_old": "yarn webpack --env.production -p"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
+    "labelsquad/src/**/*.{js,jsx,json,css}": [
       "prettier --single-quote --write",
       "git add"
     ]

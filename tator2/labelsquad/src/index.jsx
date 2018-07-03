@@ -8,18 +8,29 @@ import { createStore } from 'redux';
 import App from './javascript/app';
 import labelSquadApp from './javascript/reducers';
 
-console.log("jel")
+console.log('1');
 
-if (typeof(window) == "undefined")
-{
-    global.window = new Object()
-    global.window.props = {collections: {}, projects: {}}
+if (typeof window == 'undefined') {
+  console.log('2');
+  global.window = { props: { collections: {}, projects: {} } };
 }
 
-const store = createStore(labelSquadApp, { ...window.props });
+var props = window.props;
+
+if (props == undefined) {
+  console.log('3');
+  props = { collections: {}, projects: {} };
+}
+
+console.log('5');
+
+const store = createStore(labelSquadApp, { ...props });
 
 ReactDOM.render(<div>test</div>, document.getElementById('root'));
 
-ReactDOM.render(<Provider store={store}>
-                    <App collections={window.props.collections} projects={window.props.projects} />
-                </Provider>, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App collections={props.collections} projects={props.projects} />
+  </Provider>,
+  document.getElementById('root')
+);
