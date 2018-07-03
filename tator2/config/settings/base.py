@@ -3,7 +3,7 @@ Base settings to build other settings files upon.
 """
 
 import environ
-
+import os
 # (tator2/config/settings/base.py - 3 = tator2/)
 ROOT_DIR = environ.Path(__file__) - 3
 APPS_DIR = ROOT_DIR.path('tator2')
@@ -72,20 +72,36 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'rest_framework',
     'react',
+    'webpack_loader',
 ]
 LOCAL_APPS = [
     'tator2.users.apps.UsersAppConfig',
+    # Your stuff: custom apps that don't need webpack go here
+]
+REACT_APPS = [
     'labelsquad',
-    # Your stuff: custom apps go here
+    # Your stuff: custom apps that use webpack to build react go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + REACT_APPS
 
-
+# React render server (run `node render_server.js` to use)
 REACT = {
     'RENDER': not DEBUG,
     'RENDER_URL': 'http://127.0.0.1:9009/render',
 }
+
+# Webpack configuations
+WEBPACK_LOADER = {}
+for react_app in REACT_APPS:
+    WEBPACK_LOADER[react_app.upper()] = {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'bundle/',  # end with slash
+        'STATS_FILE': os.path.join(str(ROOT_DIR.path(react_app).path('')), 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
 
 
 # MIGRATIONS

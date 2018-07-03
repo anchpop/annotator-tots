@@ -8,7 +8,7 @@ import { createStore } from 'redux';
 import App from './javascript/app';
 import labelSquadApp from './javascript/reducers';
 
-console.log('1');
+console.log('6');
 
 if (typeof window == 'undefined') {
   console.log('2');
