@@ -69,7 +69,7 @@ function ProjectsAndCollections(props) {
         <AppBar position="static" color="default">
           <Toolbar>
             <Typography variant="title" color="inherit">
-              Labelsquad
+              Labelsquadz
             </Typography>
           </Toolbar>
         </AppBar>

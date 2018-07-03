@@ -96,11 +96,14 @@ choosePort(HOST, DEFAULT_PORT)
       //    server.reload()
       //}
     });
-    /*console.log(paths.appBuild)
+    console.log("Build folder: " + paths.appBuild)
+    let jsloc = paths.appBuild + "\\**\\*"
+    console.log("Watching for changes at: " + jsloc)
     browserSync.init( {
-        files: [paths.appBuild + '/js/*.js', paths.appSrc + "/*.css", paths.appSrc + "*.js", paths.appTemplates + '*.html'],
+        watch: true,
+        files: [jsloc, paths.appBuild + "/*.css", paths.appTemplates + '*.html'],
         proxy:  "localhost:8000"
-    });*/
+    });
     /*
     let server = browersync({
         port: 3000,
