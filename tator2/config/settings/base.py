@@ -90,7 +90,6 @@ REACT = {
     'RENDER': not DEBUG,
     'RENDER_URL': 'http://127.0.0.1:9009/render',
 }
-
 # Webpack configuations
 WEBPACK_LOADER = {}
 for react_app in REACT_APPS:

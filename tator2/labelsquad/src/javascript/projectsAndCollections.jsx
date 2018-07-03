@@ -16,93 +16,108 @@ import ProjectCard from './projectCard';
 import { collections } from './actions';
 
 const styles = theme => ({
-    root: {
-        flex: 1,
-    },
-    paper: {
-        height: 140,
-        width: 100,
-    },
-    control: {
-        padding: theme.spacing.unit * 2,
-    },
+  root: {
+    flex: 1
+  },
+  paper: {
+    height: 140,
+    width: 100
+  },
+  control: {
+    padding: theme.spacing.unit * 2
+  }
 });
 
 function ProjectsAndCollections(props) {
-    const cards = [];
-    const { classes } = props;
-    console.log('props: ');
-    console.log(props);
-    if (props.collections !== undefined) {
-        for (let i = 0; i < props.collections.length; i += 1) {
-            const collec = props.collections[i];
-            cards.push(<CollectionCard
-                key={collec.id}
-                owner={collec.owner}
-                collectionName={collec.name}
-                numOfImages={collec.numImages}
-                description={collec.description} />);
-        }
+  const cards = [];
+  const { classes } = props;
+  console.log('props: ');
+  console.log(props);
+  if (props.collections !== undefined) {
+    for (let i = 0; i < props.collections.length; i += 1) {
+      const collec = props.collections[i];
+      cards.push(
+        <CollectionCard
+          key={collec.id}
+          owner={collec.owner}
+          collectionName={collec.name}
+          numOfImages={collec.numImages}
+          description={collec.description}
+        />
+      );
     }
+  }
 
-    if (props.projects !== undefined) {
-        for (let i = 0; i < props.projects.length; i += 1) {
-            const project = props.projects[i];
-            cards.push(<ProjectCard
-                key={project.id}
-                owner={project.owner}
-                collectionName={project.name}
-                numOfImages={project.numImages}
-                description={project.description} />);
-        }
+  if (props.projects !== undefined) {
+    for (let i = 0; i < props.projects.length; i += 1) {
+      const project = props.projects[i];
+      cards.push(
+        <ProjectCard
+          key={project.id}
+          owner={project.owner}
+          collectionName={project.name}
+          numOfImages={project.numImages}
+          description={project.description}
+        />
+      );
     }
+  }
 
-
-    return (
-        <div>
-            <div>
-                <AppBar position="static" color="default">
-                    <Toolbar>
-                        <Typography variant="title" color="inherit">
-                            Labelsquadz
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-            </div>
-            <br /><Grid container className={classes.root} spacing={16}>
-                <Grid item xs={12}>
-                    <Grid container className={classes.demo} justify="center" spacing={Number(16)}>
-                        {cards.map((value, index) => (
-                            <Grid key={index} item>
-                                {value}
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Grid></Grid>
-            <Button variant="contained" color="primary" onClick={() => props.createCollection("yo")}>
-                Hello World
-            </Button>
-        </div>
-    );
+  return (
+    <div>
+      <div>
+        <AppBar position="static" color="default">
+          <Toolbar>
+            <Typography variant="title" color="inherit">
+              Labelsquad
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </div>
+      <br />
+      <Grid container className={classes.root} spacing={16}>
+        <Grid item xs={12}>
+          <Grid
+            container
+            className={classes.demo}
+            justify="center"
+            spacing={Number(16)}
+          >
+            {cards.map((value, index) => (
+              <Grid key={index} item>
+                {value}
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      </Grid>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => props.createCollection('yo')}
+      >
+        Hello World
+      </Button>
+    </div>
+  );
 }
 
 const mapStateToProps = state => ({
-      collections: state.collections,
-      projects: state.projects,
-    });
-
-const mapDispatchToProps = dispatch => ({
-    createCollection: (text) => {
-        dispatch(collections.createCollection(text));
-    },
+  collections: state.collections,
+  projects: state.projects
 });
 
+const mapDispatchToProps = dispatch => ({
+  createCollection: text => {
+    dispatch(collections.createCollection(text));
+  }
+});
 
 ProjectsAndCollections.propTypes = {
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default connect(
-mapStateToProps,
-    mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps
 )(withStyles(styles)(ProjectsAndCollections));

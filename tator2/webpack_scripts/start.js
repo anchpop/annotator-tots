@@ -1,15 +1,14 @@
 'use strict';
 
-// run django
-var exec = require('child_process').exec, child;
-child = exec('python manage.py runserver',
-    function (error, stdout, stderr) {
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        if (error !== null) {
-             console.log('exec error: ' + error);
-        }
-    });
+// Uncomment this to make `yarn start` automatically run `django runserver`. May be buggy
+/*
+var spawn = require('child_process').spawn
+// run Django's runserver
+var cmd = spawn('python', ['manage.py', 'runserver'], {stdio: 'inherit'});
+cmd.on('close', function(code) {
+  console.log('runServer exited with code ' + code);
+  cb(code);
+});*/
 
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = 'development';
@@ -30,7 +29,7 @@ const fs = require('fs-extra');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-var browersync = require("browser-sync")
+var browserSync = require('browser-sync').create();
 const clearConsole = require('react-dev-utils/clearConsole');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const {
@@ -93,13 +92,20 @@ choosePort(HOST, DEFAULT_PORT)
     );
     copyPublicFolder()
     const pack = new webpack(config, function(error, stats) {
-      if(!!server && !!server.active) {
-          server.reload()
-      }
+      //if(!!server && !!server.active) {
+      //    server.reload()
+      //}
     });
+    /*console.log(paths.appBuild)
+    browserSync.init( {
+        files: [paths.appBuild + '/js/*.js', paths.appSrc + "/*.css", paths.appSrc + "*.js", paths.appTemplates + '*.html'],
+        proxy:  "localhost:8000"
+    });*/
+    /*
     let server = browersync({
-        server: paths.appBuild,
-        port: 3000
+        port: 3000,
+        proxy:  "localhost:8000",
+        open: false
     });
     /*
     // Launch WebpackDevServer.
