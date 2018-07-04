@@ -4,12 +4,16 @@ from .models import *
 from react.render import render_component
 
 
+def get_relative_url(absolute_uri):
+    from six.moves.urllib.parse import urlparse
+    return urlparse(absolute_uri).path
+
+
 def index(request):
     image_collection_list = ImageCollection.objects.order_by(
         '-creation_date')
     project_list = Project.objects.order_by(
         '-creation_date')
-
     props = {"collections": [{"owner": collec.created_by.username,
                               "name": collec.name,
                               "description": collec.description,
@@ -20,13 +24,18 @@ def index(request):
                            "name": project.name,
                            "description": project.description,
                            "id": project.id,
-                           "numImages": len(project.collections.all())} for project in project_list]}
+                           "numImages": len(project.collections.all())} for project in project_list],
+             "on_server": True,
+             "url":  get_relative_url(request.build_absolute_uri())}
 
-    context = {"props": json.dumps(props)}
+    rendered = render_component(
+        'C:/Users/hyper/Documents/GitHub/annotator-tots/tator2/labelsquad/src/root.jsx', props)
 
-    # rendered = render_component(
-    #    'C:/Users/hyper/Documents/GitHub/annotator-tots/tator2/labelsquad/static/bundle.js', context)
+    print(f"rendered: {rendered}")
+    print(f"url: {props['url']}")
 
-    # print(rendered)
+    props["on_server"] = False
+
+    context = {"props": json.dumps(props), "rendered": rendered}
 
     return render(request, 'labelsquad/reacttest.html', context)

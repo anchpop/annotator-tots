@@ -12,14 +12,13 @@
 </head>
 <body>
 <div id="root">
-  test
+  {{ rendered|safe }} 
 </div>
 <script>
-  window.props = {{ props|safe }};  // make sure to escape your props to prevent XSS! See here for the source for the json filter: https://gist.github.com/pirate/c18bfe4fd96008ffa0aef25001a2e88f
+  window.props = {{ props|safe }} ;  // make sure to escape your props to prevent XSS! See here for the source for the json filter: https://gist.github.com/pirate/c18bfe4fd96008ffa0aef25001a2e88f
   window.react_mount = document.getElementById('react');
 </script>
-{% render_bundle 'main' config='LABELSQUAD'%}
-<!-- <script src="{% static 'bundle/js/bundle.27fd006af9fae337e555.js' %}" type="text/javascript"></script> -->
+<!--{% render_bundle 'main' config='LABELSQUAD'%}-->
 {% if debug %}
 <script id="__bs_script__">//<![CDATA[
   document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.4'><\/script>".replace("HOST", location.hostname));

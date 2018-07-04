@@ -31,8 +31,6 @@ const styles = theme => ({
 function ProjectsAndCollections(props) {
   const cards = [];
   const { classes } = props;
-  console.log('props: ');
-  console.log(props);
   if (props.collections !== undefined) {
     for (let i = 0; i < props.collections.length; i += 1) {
       const collec = props.collections[i];

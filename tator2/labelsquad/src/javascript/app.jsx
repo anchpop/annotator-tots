@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, StaticRouter, BrowserRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { css } from 'emotion';
 import Button from '@material-ui/core/Button';
@@ -13,15 +13,24 @@ import Paper from '@material-ui/core/Paper';
 
 import ProjectsAndCollections from './projectsAndCollections';
 
-
-function App(props) {
-    return (
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/labelsquad/" component={ProjectsAndCollections} />
-                </Switch>
-            </BrowserRouter>
+class App extends React.Component {
+  render() {
+    let contents = (
+      <Switch>
+        <Route exact path="/labelsquad/" component={ProjectsAndCollections} />
+      </Switch>
     );
+    let context = {};
+    if (!this.props.on_server) {
+      return <BrowserRouter>{contents}</BrowserRouter>;
+    } else {
+      return (
+        <StaticRouter location={this.props.url} context={context}>
+          {contents}
+        </StaticRouter>
+      );
+    }
+  }
 }
 
 export default App;
