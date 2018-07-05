@@ -15,7 +15,6 @@ class Root extends React.Component {
       jssStyles.parentNode.removeChild(jssStyles);
     }
 
-    console.log(this.props);
     this.store = createStore(labelSquadApp, { ...this.props });
   }
 
