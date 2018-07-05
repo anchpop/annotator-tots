@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
     'webpack_loader',
 ]
 LOCAL_APPS = [
+    'tator2',
     'tator2.users.apps.UsersAppConfig',
     # Your stuff: custom apps that don't need webpack go here
 ]
