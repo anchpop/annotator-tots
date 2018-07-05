@@ -10,6 +10,12 @@ import labelSquadApp from './javascript/reducers';
 
 class Root extends React.Component {
   componentWillMount() {
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
+
+    console.log(this.props);
     this.store = createStore(labelSquadApp, { ...this.props });
   }
 

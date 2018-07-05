@@ -31,11 +31,9 @@ def index(request):
     rendered = render_component(
         'C:/Users/hyper/Documents/GitHub/annotator-tots/tator2/labelsquad/src/root.jsx', props)
 
-    print(f"rendered: {rendered}")
-    print(f"url: {props['url']}")
-
     props["on_server"] = False
 
-    context = {"props": json.dumps(props), "rendered": rendered}
+    context = {"props": json.dumps(
+        props), "rendered_html": rendered.markup, "rendered_css": rendered.css}
 
     return render(request, 'labelsquad/reacttest.html', context)

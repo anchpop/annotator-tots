@@ -47,7 +47,8 @@ app.post('/render', function(req, res) {
 		} else {
 			res.json({
 				error: null,
-				markup: markup
+				markup: markup,
+				css:""
 			});
 		}
 	});

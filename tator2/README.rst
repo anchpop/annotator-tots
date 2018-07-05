@@ -23,11 +23,13 @@ Basic Commands
 
 To use: 
 
-Start a development server: `python manage.py runserver`
+Start a development server: `python manage.py runserver`.
 
-Watch the frontend react files and automatically update when they change: `yarn start labelsquad`
+Watch the frontend react files and automatically update when they change: `yarn start labelsquad`.
 
-Make a production-ready build of the frontend: `yarn build labelsquad`
+Make a production-ready build of the frontend: `yarn build labelsquad`.
+
+Start the Node.js render server: `yarn render`.
 
 
 Setting Up Your Users

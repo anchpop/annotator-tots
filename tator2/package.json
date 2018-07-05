@@ -109,6 +109,7 @@
     "start": "node webpack_scripts/start.js",
     "build": "node webpack_scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
+    "render": "node render_server/index.js",
     "precommit": "lint-staged",
     "start_old": "yarn webpack --env.development",
     "build_old": "yarn webpack --env.production -p"
