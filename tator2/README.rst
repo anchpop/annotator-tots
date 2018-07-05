@@ -29,7 +29,7 @@ Watch the frontend react files and automatically update when they change: `yarn 
 
 Make a production-ready build of the frontend: `yarn build labelsquad`.
 
-Start the Node.js render server: `yarn render`.
+Start the Node.js render server for server-side rendering of React components: `yarn render`. (This is only necessary in production. Note that you must restart the render server every time one of your component's source changes, as they are cached)
 
 
 Setting Up Your Users
