@@ -16,8 +16,6 @@ import ProjectsAndCollections from './projectsAndCollections';
 
 class App extends React.Component {
   render() {
-    console.log('this.props.base_url: ' + this.props.base_url);
-    console.log('tthis.props.loaded_at_url: ' + this.props.loaded_at_url);
     let contents = (
       <Switch>
         <Route exact path="/" component={ProjectsAndCollections} />
