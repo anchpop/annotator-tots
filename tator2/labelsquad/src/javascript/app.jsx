@@ -25,7 +25,7 @@ class App extends React.Component {
       return <BrowserRouter>{contents}</BrowserRouter>;
     } else {
       return (
-        <StaticRouter location={this.props.url} context={context}>
+        <StaticRouter location={this.props.loaded_at_url} context={context}>
           {contents}
         </StaticRouter>
       );

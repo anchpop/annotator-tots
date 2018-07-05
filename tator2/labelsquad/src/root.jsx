@@ -10,9 +10,11 @@ import labelSquadApp from './javascript/reducers';
 
 class Root extends React.Component {
   componentWillMount() {
-    const jssStyles = document.getElementById('jss-server-side');
-    if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
+    if (!this.props.on_server) {
+      const jssStyles = document.getElementById('jss-server-side');
+      if (jssStyles && jssStyles.parentNode) {
+        jssStyles.parentNode.removeChild(jssStyles);
+      }
     }
 
     this.store = createStore(labelSquadApp, { ...this.props });
@@ -21,7 +23,10 @@ class Root extends React.Component {
   render() {
     return (
       <Provider store={this.store}>
-        <App on_server={this.props.on_server} url={this.props.url} />
+        <App
+          on_server={this.props.on_server}
+          loaded_at_url={this.props.loaded_at_url}
+        />
       </Provider>
     );
   }

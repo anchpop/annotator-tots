@@ -3,6 +3,8 @@ python-slugify==1.2.5  # https://github.com/un33k/python-slugify
 Pillow==5.1.0  # https://github.com/python-pillow/Pillow
 argon2-cffi==18.1.0  # https://github.com/hynek/argon2_cffi
 redis>=2.10.5  # https://github.com/antirez/redis
+jsonpickle>=0.9.6
+frozendict>=1.2
 
 # Django
 # ------------------------------------------------------------------------------
