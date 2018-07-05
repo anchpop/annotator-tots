@@ -30,8 +30,21 @@ class ReactView(View):
         path_to_root_component = Path(os.path.dirname(os.path.realpath(__file__)),
                                       path_to_root_component).resolve(strict=True)
         # Pass the URL as a prop
-        render_info.context['props']['loaded_at_url'] = get_relative_url(
+        app_name = request.resolver_match.app_name
+        base_url = reverse(
+            f'{app_name}:index', current_app=self.request.resolver_match.namespace)
+        if base_url[-1] == "/":
+            base_url = base_url[:-1]
+
+        loaded_at_url = get_relative_url(
             request.build_absolute_uri())
+
+        if loaded_at_url.find(base_url) == 0:
+            loaded_at_url = loaded_at_url[len(base_url):]
+
+        render_info.context['props']['base_url'] = base_url
+        print("base url", render_info.context['props']['base_url'])
+        render_info.context['props']['loaded_at_url'] = loaded_at_url
 
         # Render the component on the server, typically for SEO reasons. If `REACT.render` is set to false in settings.py this will do nothing.
         # Set the `on_server` property to True, so you can render slightly differently on the client and server (useful for react-router)
@@ -58,7 +71,7 @@ class ReactView(View):
         """Abstract base class.
         Should return a namedtuple in the form of self.RenderInfo(path_to_template, context, path_to_root_component).
         If path_to_root_component is None, it will be assumed to be `src/root.jsx`.
-        Whatever is at your path_to_root_component will be rendered on the server and passed to your template as `{{ rendered_html }}` and possibly `{{ rendered_css }}`. It will be passed `context.props` as its props. In addition, `props.on_server` will be True on the server but not on the client. A prop with the relative url the page was loaded on is also included at `props.loaded_at_url`."""
+        Whatever is at your path_to_root_component will be rendered on the server and passed to your template as `{{ rendered_html }}` and possibly `{{ rendered_css }}`. It will be passed `context.props` as its props. In addition, `props.on_server` will be True on the server but not on the client. A prop with the relative url the page was loaded on is also included at `props.loaded_at_url`, and the base url that your app shouldn't care about is at `props.base_url`."""
         raise NotImplementedError(
             "You need to subclass ReactView and override `getPage`.")
 
@@ -81,6 +94,7 @@ class Index(ReactView):
                                "id": project.id,
                                "numImages": len(project.collections.all())} for project in project_list],
                  }
+
         # "on_server": True,}
 
         context = {"props":

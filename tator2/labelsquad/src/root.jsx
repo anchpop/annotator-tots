@@ -16,17 +16,14 @@ class Root extends React.Component {
         jssStyles.parentNode.removeChild(jssStyles);
       }
     }
-
-    this.store = createStore(labelSquadApp, { ...this.props });
+    //initialState = { collections: this.props.collections, projects: this.props.projects }
+    this.store = createStore(labelSquadApp, this.props);
   }
 
   render() {
     return (
       <Provider store={this.store}>
-        <App
-          on_server={this.props.on_server}
-          loaded_at_url={this.props.loaded_at_url}
-        />
+        <App />
       </Provider>
     );
   }

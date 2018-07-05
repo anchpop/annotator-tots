@@ -10,19 +10,24 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import { connect } from 'react-redux';
 
 import ProjectsAndCollections from './projectsAndCollections';
 
 class App extends React.Component {
   render() {
+    console.log('this.props.base_url: ' + this.props.base_url);
+    console.log('tthis.props.loaded_at_url: ' + this.props.loaded_at_url);
     let contents = (
       <Switch>
-        <Route exact path="/labelsquad/" component={ProjectsAndCollections} />
+        <Route exact path="/" component={ProjectsAndCollections} />
       </Switch>
     );
     let context = {};
     if (!this.props.on_server) {
-      return <BrowserRouter>{contents}</BrowserRouter>;
+      return (
+        <BrowserRouter basename={this.props.base_url}>{contents}</BrowserRouter>
+      );
     } else {
       return (
         <StaticRouter location={this.props.loaded_at_url} context={context}>
@@ -33,4 +38,9 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  loaded_at_url: state.loaded_at_url,
+  base_url: state.base_url
+});
+
+export default connect(mapStateToProps)(App);
