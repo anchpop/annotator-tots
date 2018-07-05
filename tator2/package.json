@@ -41,6 +41,7 @@
     "jest": "^23.2.0",
     "konva": "^2.1.6",
     "lint-staged": "^7.2.0",
+    "lodash": "^4.17.10",
     "minimist": "^1.2.0",
     "neutrino": "^8.2.3",
     "neutrino-middleware-browser-sync": "^2.1.0",
