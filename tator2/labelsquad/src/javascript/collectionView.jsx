@@ -10,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import CollectionCard from './collectionCard';
 import ProjectCard from './projectCard';
@@ -29,7 +28,7 @@ const styles = theme => ({
   }
 });
 
-const ProjectsAndCollections = props => {
+function ProjectsAndCollections(props) {
   const cards = [];
   const { classes } = props;
   if (props.collections !== undefined) {
@@ -68,7 +67,7 @@ const ProjectsAndCollections = props => {
         <AppBar position="static" color="default">
           <Toolbar>
             <Typography variant="title" color="inherit">
-              Labelsquadz
+              Labelsquirtz
             </Typography>
           </Toolbar>
         </AppBar>
@@ -97,10 +96,9 @@ const ProjectsAndCollections = props => {
       >
         Hello World
       </Button>
-      <Link to="/collection">collection</Link>
     </div>
   );
-};
+}
 
 const mapStateToProps = state => ({
   collections: state.collections,

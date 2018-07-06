@@ -13,12 +13,14 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 
 import ProjectsAndCollections from './projectsAndCollections';
+import CollectionView from './collectionView';
 
 class App extends React.Component {
   render() {
     let contents = (
       <Switch>
         <Route exact path="/" component={ProjectsAndCollections} />
+        <Route exact path="/collection" component={CollectionView} />
       </Switch>
     );
     let context = {};
@@ -28,7 +30,11 @@ class App extends React.Component {
       );
     } else {
       return (
-        <StaticRouter location={this.props.loaded_at_url} context={context}>
+        <StaticRouter
+          basename={this.props.base_url}
+          location={this.props.loaded_at_url}
+          context={context}
+        >
           {contents}
         </StaticRouter>
       );
@@ -38,7 +44,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
   loaded_at_url: state.loaded_at_url,
-  base_url: state.base_url
+  base_url: state.base_url,
+  on_server: state.on_server
 });
 
 export default connect(mapStateToProps)(App);
