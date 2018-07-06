@@ -15,22 +15,41 @@ def get_relative_url(absolute_uri):
 
 
 RenderInfo = namedtuple(
-    'RenderInfo', ['path_to_template', 'context', 'path_to_root_component'], verbose=True)
+    'RenderInfo', ['path_to_template', 'context', 'path_to_root_component'])
 
 
 class ReactView(View):
     # JsonPickle will successfully encode to JSON what might be difficult otherwise, but can have large outputs which can slow down page load times. I don't reccomend it.
     USE_JSONPICKLE = False
     DEFAULT_ROOT_COMPONENT_PATH = './src/root.jsx'
+    REACT_LOADABLE_FILENAME = './react-loadable.json'
 
     def get(self, request, *args, **kwargs):
         """Called when page is loaded"""
+
+        # Get current directory
+        app_name = request.resolver_match.app_name
+        current_dir = Path(f"./{app_name}").absolute()
+
         render_info = self.getRenderInfo(request, *args, **kwargs)
         path_to_root_component = render_info.path_to_root_component if render_info.path_to_root_component is not None else self.DEFAULT_ROOT_COMPONENT_PATH
-        path_to_root_component = Path(os.path.dirname(os.path.realpath(__file__)),
-                                      path_to_root_component).resolve(strict=True)
+        try:
+            path_to_root_component = str(Path(current_dir,
+                                              path_to_root_component).resolve(strict=True))
+        except FileNotFoundError:
+            raise FileNotFoundError(
+                f"Could not find root componenet at `{Path(current_dir, path_to_root_component).resolve()}` - check your `getRenderInfo()`. You are returning `{render_info.path_to_root_component}` for `render_info.path_to_root_component`. Note that returning `None` will cause us to use the default value, `{self.DEFAULT_ROOT_COMPONENT_PATH}`.")
+
+        # Get the path for the `react-loadable.json` file, this is useful for server side rendering
+        path_to_react_loadable = ""
+        try:
+            path_to_react_loadable = str(Path(current_dir,
+                                              self.REACT_LOADABLE_FILENAME).resolve(strict=True))
+        except FileNotFoundError:
+            print(
+                f"Could not find {Path(current_dir, self.REACT_LOADABLE_FILENAME).resolve()}, this is necessary for server-side rendering with loadable. Check https://github.com/jamiebuilds/react-loadable#webpack-plugin. This is not an issue if you're not using react-loadable")
+
         # Pass the URL as a prop
-        app_name = request.resolver_match.app_name
         base_url = reverse(
             f'{app_name}:index', current_app=self.request.resolver_match.namespace)
         if base_url[-1] == "/":
@@ -50,7 +69,7 @@ class ReactView(View):
         # Set the `on_server` property to True, so you can render slightly differently on the client and server (useful for react-router)
         render_info.context['props']['on_server'] = True
         server_side_render = render_component(
-            str(Path(path_to_root_component).resolve(strict=True)), render_info.context['props'])
+            path_to_root_component, props=render_info.context['props'], path_to_react_loadable=path_to_react_loadable)
         render_info.context['rendered_html'] = server_side_render.markup
         render_info.context['rendered_css'] = server_side_render.css
         print("markup: ", server_side_render.markup)
@@ -65,6 +84,7 @@ class ReactView(View):
             render_info.context['props'] = json.dumps(
                 render_info.context['props'])
 
+        # Create the html and return
         return render(request, render_info.path_to_template, render_info.context)
 
     def getRenderInfo(self, request, *args, **kwargs) -> RenderInfo:
@@ -100,7 +120,7 @@ class Index(ReactView):
         context = {"props":
                    props}  # , "rendered_html": rendered.markup, "rendered_css": rendered.css}
 
-        return RenderInfo('labelsquad/reacttest.html', context, None)
+        return RenderInfo(path_to_template='labelsquad/reacttest.html', context=context, path_to_root_component=None)
 
         # rendered = render_component(
         #    'C:/Users/hyper/Documents/GitHub/annotator-tots/tator2/labelsquad/src/root.jsx', props)

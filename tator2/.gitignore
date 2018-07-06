@@ -341,3 +341,5 @@ tator2/media/
 */static
 
 **/webpack-stats.json
+
+render_server/build

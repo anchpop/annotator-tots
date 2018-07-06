@@ -11,28 +11,32 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Loadable from 'react-loadable';
+
+import LoadingIcon from './loadingIcon';
 
 const CollectionView = Loadable({
   loader: () =>
     import('./collectionView' /* webpackChunkName: "collectionView" */),
-  loading: CircularProgress
+  loading: LoadingIcon
 });
 
 const ProjectsAndCollections = Loadable({
   loader: () =>
     import('./projectsAndCollections' /* webpackChunkName: "projectsAndCollections" */),
-  loading: CircularProgress
+  loading: LoadingIcon
 });
 
 class App extends React.Component {
   render() {
     let contents = (
-      <Switch>
-        <Route exact path="/" component={ProjectsAndCollections} />
-        <Route exact path="/collection" component={CollectionView} />
-      </Switch>
+      <div>
+        Hello, citizen!
+        <Switch>
+          <Route exact path="/" component={ProjectsAndCollections} />
+          <Route exact path="/collection" component={CollectionView} />
+        </Switch>
+      </div>
     );
     let context = {};
     if (!this.props.on_server) {

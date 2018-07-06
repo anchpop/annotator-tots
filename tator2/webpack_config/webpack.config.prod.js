@@ -12,6 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const BundleTracker = require('webpack-bundle-tracker')
+const ReactLoadablePlugin = require('react-loadable/webpack').ReactLoadablePlugin;
 
 module.exports = (paths) => {
   // Webpack uses `publicPath` to determine where the app is being served from.
@@ -331,7 +332,10 @@ module.exports = (paths) => {
       // You can remove this if you don't use Moment.js:
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // Saves information about the webpack output for use by Django 
-      new BundleTracker({filename: paths.appRoot + '/webpack-stats.json'})
+      new BundleTracker({filename: paths.appRoot + '/webpack-stats.json'}),
+      new ReactLoadablePlugin({
+        filename:  paths.appRoot + '/react-loadable.json',
+      }),
     ],
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.

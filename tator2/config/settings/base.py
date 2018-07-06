@@ -88,7 +88,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + REACT_APPS
 
 # React render server (run `node render_server.js` to use)
 REACT = {
-    'RENDER': not DEBUG,
+    'RENDER': True,
     'RENDER_URL': 'http://127.0.0.1:9009/render',
 }
 # Webpack configuations
