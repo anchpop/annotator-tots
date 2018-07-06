@@ -15,12 +15,14 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Loadable from 'react-loadable';
 
 const CollectionView = Loadable({
-  loader: () => import('./collectionView'),
+  loader: () =>
+    import('./collectionView' /* webpackChunkName: "collectionView" */),
   loading: CircularProgress
 });
 
 const ProjectsAndCollections = Loadable({
-  loader: () => import('./projectsAndCollections'),
+  loader: () =>
+    import('./projectsAndCollections' /* webpackChunkName: "projectsAndCollections" */),
   loading: CircularProgress
 });
 
