@@ -11,9 +11,18 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Loadable from 'react-loadable';
 
-import ProjectsAndCollections from './projectsAndCollections';
-import CollectionView from './collectionView';
+const CollectionView = Loadable({
+  loader: () => import('./collectionView'),
+  loading: CircularProgress
+});
+
+const ProjectsAndCollections = Loadable({
+  loader: () => import('./projectsAndCollections'),
+  loading: CircularProgress
+});
 
 class App extends React.Component {
   render() {

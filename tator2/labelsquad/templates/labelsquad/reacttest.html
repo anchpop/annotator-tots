@@ -27,6 +27,7 @@
     window.props = {{ props|json|safe }} ;  // make sure we escape our props to prevent XSS! 
     window.react_mount = document.getElementById('react');
   </script>
+  <!-- React -->
   {% render_bundle 'main' config='LABELSQUAD'%}
   {% if debug %}
   <script id="__bs_script__">//<![CDATA[
