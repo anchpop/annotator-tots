@@ -45,11 +45,9 @@ Then, for the email backend, we use Mailhog. So:
 
 Start a development server: `python manage.py runserver`.
 
-Watch the frontend react files and automatically update when they change: `yarn start labelsquad`.
+Watch the frontend react files and automatically update when they change: `yarn start <yourapp>`. To make an optimized build for production, use `yarn build <yourapp>`. If you omit `<yourapp>` it will default to `tator2`.
 
-Make a production-ready build of the frontend: `yarn build <app to build, leave blank for default>`.
-
-Start the Node.js render server for server-side rendering of React components: `yarn render`. (By default this is not used in development, but if you set `REACT.RENDER` to `True` in `config/base.py`, you can test it out. Note that you must restart the render server every time one of your component's source changes, as they are cached)
+For server-side rendering, we use a NodeJS render server. Make sure you have the latest version of Node. Build the render server with `yarn build-render-server` then run it with `yarn start-render-server`. By default in development server-side rendering is not used, but if you set `REACT.RENDER` to `True` in `config/base.py`, you can test it out. (Note that you must restart the render server every time one of your component's source changes, as Node caches them). 
 
 
 Setting Up Your Users
