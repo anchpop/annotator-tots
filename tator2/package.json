@@ -28,6 +28,7 @@
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^0.1.19",
+    "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
     "dotenv-expand": "^4.2.0",
     "emotion": "^9.2.4",
@@ -113,14 +114,12 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "start": "node webpack_scripts/start.js",
-    "build": "node webpack_scripts/build.js && yarn build-server",
-    "build-render-server": "babel -d ./render_server/build ./render_server/src -s",
+    "start": "cross-env NODE_ENV=frontend node webpack_scripts/start.js",
+    "build": "node webpack_scripts/build.js  ",
     "test": "node scripts/test.js --env=jsdom",
+    "build-render-server": "babel -d ./render_server/build ./render_server/src -s ",
     "start-render-server": "node ./render_server/build/index.js",
-    "precommit": "lint-staged",
-    "start_old": "yarn webpack --env.development",
-    "build_old": "yarn webpack --env.production -p"
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "labelsquad/src/**/*.{js,jsx,json,css}": [

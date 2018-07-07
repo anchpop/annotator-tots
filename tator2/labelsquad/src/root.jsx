@@ -13,7 +13,6 @@ import labelSquadApp from './javascript/reducers';
 
 class Root extends React.Component {
   componentWillMount() {
-    console.log('testtt ');
     if (!this.props.on_server) {
       const jssStyles = document.getElementById('jss-server-side');
       if (jssStyles && jssStyles.parentNode) {

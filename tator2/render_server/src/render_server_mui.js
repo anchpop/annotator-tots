@@ -53,18 +53,13 @@ function handleRender(toRenderFilename, props, pathToReactLoadable, res) {
     });
 
     const generateClassName = createGenerateClassName();
-    console.log("Rendering " + toRenderFilename)
     let App = require(toRenderFilename).default
-    console.log("App loaded")
 
     if (pathToReactLoadable)
     {
-        console.log("1")
         Loadable.preloadAll().then(() => {
-            console.log("2")
             // load react-loadable info
             const stats = require(pathToReactLoadable);
-            console.log("3")
 
             let modules = [];
             const toRender = 
@@ -96,8 +91,6 @@ function handleRender(toRenderFilename, props, pathToReactLoadable, res) {
                         
             let styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
             let scripts = bundles.filter(bundle => bundle.file.endsWith('.js'));
-            console.log(scripts)
-            console.log(styles)
 
             
             // Grab the CSS from our sheetsRegistry.
@@ -109,8 +102,6 @@ function handleRender(toRenderFilename, props, pathToReactLoadable, res) {
                 markup: html,
                 css: css
             }
-            console.log("Returning data: ")
-            console.log(data)
             res.json(data);
         }).catch(err => {
             console.log(err);
@@ -139,8 +130,6 @@ function handleRender(toRenderFilename, props, pathToReactLoadable, res) {
             markup: html,
             css: css
         }
-        console.log("Returning data: ")
-        console.log(data)
         res.json(data);
         
     }

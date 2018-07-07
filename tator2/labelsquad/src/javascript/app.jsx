@@ -30,13 +30,10 @@ const ProjectsAndCollections = Loadable({
 class App extends React.Component {
   render() {
     let contents = (
-      <div>
-        Hello, citizen!
-        <Switch>
-          <Route exact path="/" component={ProjectsAndCollections} />
-          <Route exact path="/collection" component={CollectionView} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/" component={ProjectsAndCollections} />
+        <Route exact path="/collection" component={CollectionView} />
+      </Switch>
     );
     let context = {};
     if (!this.props.on_server) {
