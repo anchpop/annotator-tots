@@ -21,7 +21,7 @@ RenderInfo = namedtuple(
 class ReactView(View):
     # JsonPickle will successfully encode to JSON what might be difficult otherwise, but can have large outputs which can slow down page load times. I don't reccomend it.
     USE_JSONPICKLE = False
-    DEFAULT_ROOT_COMPONENT_PATH = './src/root.jsx'
+    DEFAULT_ROOT_COMPONENT_PATH = './src/root.js'
     REACT_LOADABLE_FILENAME = './react-loadable.json'
 
     def get(self, request, *args, **kwargs):

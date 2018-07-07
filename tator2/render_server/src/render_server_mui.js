@@ -37,6 +37,15 @@ import ReactDOMServer from 'react-dom/server';
 import { getBundles } from 'react-loadable/webpack'
 //import App from "../labelsquad/src/root.jsx"
 
+Promise.all([
+    import('./../test')
+   ]).then(([
+    CollectionView,
+    ]) => {
+     console.log(CollectionView);
+     /* CODE HERE*/
+    }).catch((err) => {console.log("Triggered error!", err);});
+
 
 var ADDRESS = argv.address;
 var PORT = argv.port;
@@ -54,6 +63,7 @@ function handleRender(toRenderFilename, props, pathToReactLoadable, res) {
 
     const generateClassName = createGenerateClassName();
     let App = require(toRenderFilename).default
+    console.log("App:", App)
 
     if (pathToReactLoadable)
     {

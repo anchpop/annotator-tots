@@ -28,7 +28,7 @@ const styles = theme => ({
   }
 });
 
-function ProjectsAndCollections(props) {
+function CollectionView(props) {
   const cards = [];
   const { classes } = props;
   if (props.collections !== undefined) {
@@ -111,11 +111,11 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-ProjectsAndCollections.propTypes = {
+CollectionView.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(ProjectsAndCollections));
+)(withStyles(styles)(CollectionView));
