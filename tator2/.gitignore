@@ -341,5 +341,6 @@ tator2/media/
 */static
 
 **/webpack-stats.json
+**/react-loadable.json
 
 render_server/build
