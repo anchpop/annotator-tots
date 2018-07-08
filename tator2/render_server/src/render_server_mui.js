@@ -80,37 +80,25 @@ function handleRender(toRenderFilename, props, pathToReactLoadable, res) {
                     </Loadable.Capture>
                 </MuiThemeProvider>
             </JssProvider>
-
-            /*
-            let htmlx = ReactDOMServer.renderToString(
-                <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-                {toRender}
-            </Loadable.Capture>)*/
-
-            /*const LoadableComponent = Loadable({
-                loader: () => import('./Bar'),
-                modules: ['./Bar'],
-                webpack: () => [require.resolveWeak('./Bar')],
-            });//Loadable({loader: toRender, loading: <div>You should never see this, citizen</div>});*/
                 
             // Render the component to a string.
             const html = renderToString(
                 toRender
             );
             let bundles = getBundles(stats, modules);
+            console.log("bundles:", bundles)
                         
-            let styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
-            let scripts = bundles.filter(bundle => bundle.file.endsWith('.js'));
+            //let styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
+            //let scripts = bundles.filter(bundle => bundle.file.endsWith('.js'));
 
-            
             // Grab the CSS from our sheetsRegistry.
             const css = sheetsRegistry.toString();
             
-
             const data = {
                 error: null,
                 markup: html,
-                css: css
+                css: css,
+                extra_data: {'bundles': bundles}
             }
             res.json(data);
         }).catch(err => {
@@ -123,7 +111,7 @@ function handleRender(toRenderFilename, props, pathToReactLoadable, res) {
         const toRender = 
         <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
             <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-                {React.createElement(AppToRender, props)}
+                {React.createElement(App, props)}
             </MuiThemeProvider>
         </JssProvider>
             
@@ -153,7 +141,7 @@ res.end('React render server');
 });
 
 app.post('/render', function(req, res) {
-    handleRender(req.body.path, JSON.parse(req.body.serializedProps), req.body.pathToReactLoadable, res);
+    handleRender(req.body.path, JSON.parse(req.body.serializedProps), req.body.extraData.path_to_react_loadable, res);
 
     /*reactRender(req.body, function(err, markup) {
         if (err) {

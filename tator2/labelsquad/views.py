@@ -7,6 +7,8 @@ from collections import namedtuple
 from pathlib import Path
 import jsonpickle
 import os
+from webpack_loader import utils
+from collections import OrderedDict
 
 
 def get_relative_url(absolute_uri):
@@ -63,14 +65,36 @@ class ReactView(View):
 
         render_info.context['props']['base_url'] = base_url
         render_info.context['props']['loaded_at_url'] = loaded_at_url
+        render_info.context['app_name'] = app_name
+        render_info.context['app_name_upper'] = app_name.upper()
 
         # Render the component on the server, typically for SEO reasons. If `REACT.render` is set to false in settings.py this will do nothing.
         # Set the `on_server` property to True, so you can render slightly differently on the client and server (useful for react-router)
         render_info.context['props']['on_server'] = True
         server_side_render = render_component(
-            path_to_root_component, props=render_info.context['props'], path_to_react_loadable=path_to_react_loadable)
+            path_to_root_component, props=render_info.context['props'], extra_data={'path_to_react_loadable': path_to_react_loadable})
         render_info.context['rendered_html'] = server_side_render.markup
         render_info.context['rendered_css'] = server_side_render.css
+
+        # Give the client bundles to load
+        render_info.context['bundles_js'] = ["main"]
+        render_info.context['bundles_css'] = ["main"]
+        if (server_side_render.extra_data.get("bundles", None)):
+            print(server_side_render.extra_data)
+            all_bundles = utils.get_chunks(config=app_name.upper())
+
+            loadable_bundles_js = [
+                bundle["name"].split('/')[-1].split('.')[0] for bundle in server_side_render.extra_data["bundles"] if bundle["file"].endswith('.js')]
+            loadable_bundles_css = [
+                bundle["name"].split('/')[-1].split('.')[0] for bundle in server_side_render.extra_data["bundles"] if bundle["file"].endswith('.css')]
+
+            js_bundles_to_load = list(OrderedDict.fromkeys(
+                loadable_bundles_js + ["main"] + all_bundles))
+            css_bundles_to_load = list(OrderedDict.fromkeys(
+                loadable_bundles_css + ["main"] + all_bundles))
+
+            render_info.context['bundles_js'] = js_bundles_to_load
+            render_info.context['bundles_css'] = css_bundles_to_load
 
         # Set the `on_server` property to False, because we'll be sending this to the client
         render_info.context['props']['on_server'] = False

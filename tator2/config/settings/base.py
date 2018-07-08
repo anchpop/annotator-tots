@@ -100,7 +100,7 @@ for react_app in REACT_APPS:
         'STATS_FILE': os.path.join(str(ROOT_DIR.path(react_app).path('')), 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+        'IGNORE': ['.+\.hot-update.js', '.+\.map'],
     }
 
 

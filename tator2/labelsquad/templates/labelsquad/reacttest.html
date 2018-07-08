@@ -28,7 +28,10 @@
     window.react_mount = document.getElementById('react');
   </script>
   <!-- React -->
-  {% render_bundle 'main' config='LABELSQUAD'%}
+  {% for bundle in bundles_js %}
+    {% render_bundle bundle config=app_name_upper%} 
+  {% endfor %}
+
   {% if debug %}
   <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.4'><\/script>".replace("HOST", location.hostname));
