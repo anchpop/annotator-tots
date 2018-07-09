@@ -89,9 +89,9 @@ class ReactView(View):
                 bundle["name"].split('/')[-1].split('.')[0] for bundle in server_side_render.extra_data["bundles"] if bundle["file"].endswith('.css')]
 
             js_bundles_to_load = list(OrderedDict.fromkeys(
-                loadable_bundles_js + ["main"] + all_bundles))
+                ["main"] + loadable_bundles_js + all_bundles))
             css_bundles_to_load = list(OrderedDict.fromkeys(
-                loadable_bundles_css + ["main"] + all_bundles))
+                ["main"] + loadable_bundles_css + all_bundles))
 
             render_info.context['bundles_js'] = js_bundles_to_load
             render_info.context['bundles_css'] = css_bundles_to_load
@@ -137,16 +137,7 @@ class Index(ReactView):
                                "numImages": len(project.collections.all())} for project in project_list],
                  }
 
-        # "on_server": True,}
-
         context = {"props":
-                   props}  # , "rendered_html": rendered.markup, "rendered_css": rendered.css}
+                   props}
 
         return RenderInfo(path_to_template='labelsquad/reacttest.html', context=context, path_to_root_component=None)
-
-        # rendered = render_component(
-        #    'C:/Users/hyper/Documents/GitHub/annotator-tots/tator2/labelsquad/src/root.jsx', props)
-
-        # props["on_server"] = False
-
-        # return render(request, 'labelsquad/reacttest.html', context)

@@ -65,7 +65,7 @@ module.exports = (paths) => {
       // Generated JS file names (with nested folders).
       // There will be one main bundle, and one file per asynchronous chunk.
       // We don't currently advertise code splitting but Webpack supports it.
-      filename: 'js/[name].[chunkhash:8].js',
+      filename: 'js/bundle.[name].js',
       chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
       // We inferred the "public path" (such as / or /my-project) from homepage.
       publicPath: publicPath,

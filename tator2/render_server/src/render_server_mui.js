@@ -60,74 +60,52 @@ function handleRender (toRenderFilename, props, pathToReactLoadable, res) {
   // Create a theme instance.
   const theme = createMuiTheme (
     {
-        Loadable.preloadAll().then(() => {
-            // load react-loadable info
-            const stats = require(pathToReactLoadable);
-
-            let modules = [];
-            const toRender = 
-            <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-                <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-                    <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-                        {React.createElement(App, props)}
-                    </Loadable.Capture>
-                </MuiThemeProvider>
-            </JssProvider>
-                
-            // Render the component to a string.
-            const html = renderToString(
-                toRender
-            );
-            let bundles = getBundles(stats, modules);
-            console.log("bundles:", bundles)
-                        
-            //let styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
-            //let scripts = bundles.filter(bundle => bundle.file.endsWith('.js'));
-
-            // Grab the CSS from our sheetsRegistry.
-            const css = sheetsRegistry.toString();
-            
-            const data = {
-                error: null,
-                markup: html,
-                css: css,
-                extra_data: {'bundles': bundles}
-            }
-            res.json(data);
-        }).catch(err => {
-            console.log(err);
-        });
+      // you can replace this with a `require()` to use a theme from somewhere else
     }
-    else {
+  );
 
-        let modules = [];
-        const toRender = 
-        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-            <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-                {React.createElement(App, props)}
-            </MuiThemeProvider>
+  const generateClassName = createGenerateClassName ();
+  let App = require (toRenderFilename).default;
+  console.log ('App:', App);
+
+  if (pathToReactLoadable) {
+    Loadable.preloadAll ().then (() => {
+      // load react-loadable info
+      const stats = require (pathToReactLoadable);
+
+      let modules = [];
+      const toRender = (
+        <JssProvider
+          registry={sheetsRegistry}
+          generateClassName={generateClassName}
+        >
+          <MuiThemeProvider theme={theme} sheetsManager={new Map ()}>
+            <Loadable.Capture report={moduleName => modules.push (moduleName)}>
+              {React.createElement (App, props)}
+            </Loadable.Capture>
+          </MuiThemeProvider>
         </JssProvider>
-            
-        // Render the component to a string.
-        const html = renderToString (toRender);
-        let bundles = getBundles (stats, modules);
+      );
 
-        let styles = bundles.filter (bundle => bundle.file.endsWith ('.css'));
-        let scripts = bundles.filter (bundle => bundle.file.endsWith ('.js'));
+      // Render the component to a string.
+      const html = renderToString (toRender);
+      let bundles = getBundles (stats, modules);
+      console.log ('bundles:', bundles);
 
-        // Grab the CSS from our sheetsRegistry.
-        const css = sheetsRegistry.toString ();
+      //let styles = bundles.filter(bundle => bundle.file.endsWith('.css'));
+      //let scripts = bundles.filter(bundle => bundle.file.endsWith('.js'));
 
-        const data = {
-          error: null,
-          markup: html,
-          css: css,
-        };
-        res.json (data);
-      })
-      .catch (err => {
-        console.log (err);
-      });
+      // Grab the CSS from our sheetsRegistry.
+      const css = sheetsRegistry.toString ();
+
+      const data = {
+        error: null,
+        markup: html,
+        css: css,
+        extra_data: {bundles: bundles},
+      };
+      res.json (data);
+    });
   } else {
     let modules = [];
     const toRender = (
@@ -136,7 +114,7 @@ function handleRender (toRenderFilename, props, pathToReactLoadable, res) {
         generateClassName={generateClassName}
       >
         <MuiThemeProvider theme={theme} sheetsManager={new Map ()}>
-          {React.createElement (AppToRender, props)}
+          {React.createElement (App, props)}
         </MuiThemeProvider>
       </JssProvider>
     );
@@ -162,8 +140,13 @@ app.get ('/', function (req, res) {
   res.end ('React render server');
 });
 
-app.post('/render', function(req, res) {
-    handleRender(req.body.path, JSON.parse(req.body.serializedProps), req.body.extraData.path_to_react_loadable, res);
+app.post ('/render', function (req, res) {
+  handleRender (
+    req.body.path,
+    JSON.parse (req.body.serializedProps),
+    req.body.extraData.path_to_react_loadable,
+    res
+  );
 
   /*reactRender(req.body, function(err, markup) {
         if (err) {
