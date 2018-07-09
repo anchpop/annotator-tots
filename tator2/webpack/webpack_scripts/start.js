@@ -75,9 +75,7 @@ choosePort (HOST, DEFAULT_PORT).then (port => {
     return;
   }
   copyPublicFolder ();
-  const pack = new webpack (config, function (error, stats) {
-    console.log ('error: ', error);
-  });
+  const pack = new webpack (config);
   console.log ('Build folder: ' + paths.appBuild);
 
   // watching `paths.appBuild + "\\**\\*"` will react to any changes in the build directory

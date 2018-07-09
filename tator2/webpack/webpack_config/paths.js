@@ -1,6 +1,6 @@
 'use strict';
 
-const pack = require('../package');
+const pack = require('../../package');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');

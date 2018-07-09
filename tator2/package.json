@@ -115,8 +115,8 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "start": "node webpack_scripts/start.js",
-    "build": "node webpack_scripts/build.js  ",
+    "start": "node webpack/webpack_scripts/start.js",
+    "build": "node webpack/webpack_scripts/build.js  ",
     "test": "node scripts/test.js --env=jsdom",
     "build-render-server": "babel -d ./render_server/build ./render_server/src -s ",
     "start-render-server": "node --experimental-modules ./render_server/build/index.js",

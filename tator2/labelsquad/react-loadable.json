@@ -2625,16 +2625,16 @@
       "publicPath": "/static/bundle/js/bundle.main.js.map"
     }
   ],
-  "C:\\Users\\Anchpop\\Documents\\GitHub\\annotator-tots\\tator2\\webpack_config\\polyfills.js": [
+  "C:\\Users\\Anchpop\\Documents\\GitHub\\annotator-tots\\tator2\\webpack\\webpack_config\\polyfills.js": [
     {
-      "id": "./webpack_config/polyfills.js",
-      "name": "./webpack_config/polyfills.js",
+      "id": "./webpack/webpack_config/polyfills.js",
+      "name": "./webpack/webpack_config/polyfills.js",
       "file": "js/bundle.main.js",
       "publicPath": "/static/bundle/js/bundle.main.js"
     },
     {
-      "id": "./webpack_config/polyfills.js",
-      "name": "./webpack_config/polyfills.js",
+      "id": "./webpack/webpack_config/polyfills.js",
+      "name": "./webpack/webpack_config/polyfills.js",
       "file": "js/bundle.main.js.map",
       "publicPath": "/static/bundle/js/bundle.main.js.map"
     }
