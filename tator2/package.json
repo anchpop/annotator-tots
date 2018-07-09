@@ -3,12 +3,6 @@
   "version": "0.1.0",
   "dependencies": {
     "@babel/preset-env": "^7.0.0-beta.52",
-    "@material-ui/core": "^1.2.3",
-    "@neutrinojs/airbnb-base": "^8.2.3",
-    "@neutrinojs/eslint": "^8.2.3",
-    "@neutrinojs/pwa": "^8.2.3",
-    "@neutrinojs/react": "^8.2.3",
-    "@neutrinojs/style-loader": "^8.2.3",
     "autoprefixer": "^8.6.4",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
